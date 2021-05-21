@@ -6,7 +6,7 @@ export default {
 
     let stripSearch = searched.replace(/\s/g, '+');
     console.log(stripSearch);
-    let stringRequest = ` https://www.googleapis.com/books/v1/volume?q=${stripSearch}&maxResults=25printType=books`;
+    let stringRequest = `https://www.googleapis.com/books/v1/volumes?q=${stripSearch}`;
     return axios.get(stringRequest);
   }, 
   getBooks: function() {

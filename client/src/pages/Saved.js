@@ -53,7 +53,7 @@ function Books() {
         .catch(err => console.log(err));
     }
   };
-
+  console.log(books);
     return (
       <Container fluid>
         <Row>
@@ -65,8 +65,8 @@ function Books() {
             {books.length ? (
               <List>
                 {books.map(book => (
-                  <ListItem key={book._id}>
-                    <Link to={"/books/" + book._id}>
+                  <ListItem key={book._d}>
+                    <Link to={"/books/" + book.id}>
                       <strong>
                         {book.title} by {book.author}
                       </strong>

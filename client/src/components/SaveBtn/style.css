@@ -1,0 +1,10 @@
+.save-btn {
+  /* float: right; */
+  color: #44e747;
+  margin: 10px;
+}
+
+span.save-btn:hover{
+  box-shadow: #44e747;
+  text-shadow: #44e747;
+}
