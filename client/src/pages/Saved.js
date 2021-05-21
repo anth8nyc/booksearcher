@@ -5,7 +5,7 @@ import API from "../utils/API";
 import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../components/Grid";
 import { List, ListItem } from "../components/List";
-import { Input, TextArea, FormBtn } from "../components/Form";
+import { Input, FormBtn } from "../components/Form";
 
 function Books() {
   // Setting our component's initial state
@@ -57,24 +57,10 @@ function Books() {
     return (
       <Container fluid>
         <Row>
-          <Col size="md-12">
+          <Col size="md-12 sm-11">
             <Jumbotron>
-              <h1>What Books Should I Read?</h1>
+              <h1>Books On My List</h1>
             </Jumbotron>
-            <form>
-              <Input
-                onChange={handleInputChange}
-                name="title"
-                placeholder="Search Books"
-              />
-              <FormBtn
-                disabled={!(formObject.author && formObject.title)}
-                onClick={handleFormSubmit}
-              >
-                Search
-              </FormBtn>
-            </form>
-           
             {books.length ? (
               <List>
                 {books.map(book => (
@@ -89,7 +75,7 @@ function Books() {
                 ))}
               </List>
             ) : (
-              <h3>No Results to Display</h3>
+              <h3>No books saved yet!</h3>
             )}
           </Col>
         </Row>

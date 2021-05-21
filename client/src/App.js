@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Books from "./pages/Books";
 import Detail from "./pages/Detail";
 import NoMatch from "./pages/NoMatch";
+import Saved from "./pages/Saved"
 import Nav from "./components/Nav";
 
 function App() {
@@ -16,6 +17,9 @@ function App() {
           </Route>
           <Route exact path="/books/:id">
             <Detail />
+          </Route>
+          <Route exact path="/saved/">
+            <Saved/>
           </Route>
           <Route>
             <NoMatch />
