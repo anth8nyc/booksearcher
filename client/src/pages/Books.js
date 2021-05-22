@@ -9,33 +9,32 @@ import { Input, FormBtn } from "../components/Form";
 
 function Books() {
   // Setting our component's initial state
-  const [books, setBooks] = useState([]);
+  const [gbooks, setgBooks] = useState([]);
   const [formObject, setFormObject] = useState({});
 
-  // Load all books and store them with setBooks
-  useEffect(() => {
-    loadBooks();
-  }, []);
+  // // Load all books and store them with setBooks
+  // useEffect(() => {
+  //   loadBooks();
+  // }, []);
 
-  // Loads all books and sets them to books
-  function loadBooks() {
-    API.getBooks()
-      .then((res) => setBooks(res.data))
-      .catch((err) => console.log(err));
-  }
+  // // Loads all books and sets them to books
+  // function loadBooks() {
+  //   API.getSavedBooks()
+  //     .then((res) => setBooks(res.data))
+  //     .catch((err) => console.log(err));
+  // }
 
   // Deletes a book from the database with a given id, then reloads books from the db
-  function saveBook(book) {
+  function saveBook(gbook) {
     API.saveBook({
-      imgsrc: book.volumeInfo.imageLinks.smallThumbnail,
-      title: book.volumeInfo.title,
-      authors: book.volumeInfo.authors,
-      description: book.volumeInfo.description,
-      link: book.volumeInfo.previewLink,
-
+      imgsrc: gbook.volumeInfo.imageLinks.smallThumbnail,
+      title: gbook.volumeInfo.title,
+      authors: gbook.volumeInfo.authors,
+      description: gbook.volumeInfo.description,
+      link: gbook.volumeInfo.previewLink
     })
-    .then(res => loadBooks())
-    .catch(err => console.log(err));
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
   }
   // Handles updating component state when the user types into the input field
   function handleInputChange(event) {
@@ -51,16 +50,18 @@ function Books() {
     API.getGoogleBooks(formObject.searched)
       .then((res) => {
         console.log(res.data.items);
-        setBooks(res.data.items);
+        setgBooks(res.data.items);
         if (res.data.items === undefined) {
-          books = [];
+          gbooks = [];
         } else {
-          setBooks(res.data.items);
+          setgBooks(res.data.items);
         }
       })
       .catch((err) => console.log(err));
-  }
 
+
+  }
+  console.log(gbooks)
   return (
     <Container fluid>
       <Row>
@@ -81,27 +82,26 @@ function Books() {
             </form>
           </Col>
 
-          {books.length ? (
+          {gbooks.length ? (
             <List>
-              {books.map((book) => (
-                <ListItem key={book.id}>
+              {gbooks.map((gbook) => (
+                <ListItem key={gbook.id}>
                   <Col size="md-12">
                     <Row>
                       <img className="m-auto"
-                        src={book.volumeInfo.imageLinks.smallThumbnail}
+                        src={gbook.volumeInfo.imageLinks.smallThumbnail}
+                        alt={gbook.volumeInfo.title}
                       ></img>
                       <Col size="md-10">
                         <strong>
-                          {book.volumeInfo.title} by {book.volumeInfo.authors}
+                          {gbook.volumeInfo.title} by {gbook.volumeInfo.authors}
                         </strong>
-                        {/* <Link to={"/books/" + book.id}> */}
-                        {/* </Link> */}
-                        <p>{book.volumeInfo.description}</p>
-                        <a href={book.volumeInfo.previewLink}>See on Google Books →</a>
+                        <p>{gbook.volumeInfo.description}</p>
+                        <a href={gbook.volumeInfo.previewLink}>See on Google gBooks →</a>
                         <br></br>
                         <br></br>
-                        <SaveBtn onClick={() => saveBook(book)} />
-                        <DeleteBtn onClick={() => saveBook(book)} />
+                        <SaveBtn onClick={() => saveBook(gbook)} />
+                        <DeleteBtn onClick={() => saveBook(gbook)} />
                         <br></br>
                       </Col>
                     </Row>

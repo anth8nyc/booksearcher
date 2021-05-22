@@ -5,7 +5,7 @@ import "./style.css";
 // That way we don't have to define them all individually
 function DeleteBtn(props) {
   return (
-    <button {...props} className="col-1 delete-btn btn" role="button" tabIndex="0">
+    <button {...props} className="col-1 delete-btn btn" tabIndex="0">
     
       Delete
     {props.children}

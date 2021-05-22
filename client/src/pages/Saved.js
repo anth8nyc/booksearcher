@@ -2,15 +2,12 @@ import React, { useState, useEffect } from "react";
 import DeleteBtn from "../components/DeleteBtn";
 import Jumbotron from "../components/Jumbotron";
 import API from "../utils/API";
-import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../components/Grid";
 import { List, ListItem } from "../components/List";
-import { Input, FormBtn } from "../components/Form";
 
 function Books() {
   // Setting our component's initial state
   const [books, setBooks] = useState([])
-  const [formObject, setFormObject] = useState({})
 
   // Load all books and store them with setBooks
   useEffect(() => {
@@ -19,9 +16,11 @@ function Books() {
 
   // Loads all books and sets them to books
   function loadBooks() {
-    API.getBooks()
-      .then(res => 
-        setBooks(res.data)
+    API.getSavedBooks()
+      .then(res => {
+        console.log(res.data);
+        setBooks(res.data);
+        }
       )
       .catch(err => console.log(err));
   };
@@ -33,26 +32,20 @@ function Books() {
       .catch(err => console.log(err));
   }
 
-  // Handles updating component state when the user types into the input field
-  function handleInputChange(event) {
-    const { name, value } = event.target;
-    setFormObject({...formObject, [name]: value})
-  };
-
   // When the form is submitted, use the API.saveBook method to save the book data
   // Then reload books from the database
-  function handleFormSubmit(event) {
-    event.preventDefault();
-    if (formObject.title && formObject.author) {
-      API.saveBook({
-        title: formObject.title,
-        author: formObject.author,
-        synopsis: formObject.synopsis
-      })
-        .then(res => loadBooks())
-        .catch(err => console.log(err));
-    }
-  };
+  // function handleFormSubmit(event) {
+  //   event.preventDefault();
+  //   if (formObject.title && formObject.author) {
+  //     API.saveBook({
+  //       title: formObject.title,
+  //       author: formObject.author,
+  //       synopsis: formObject.synopsis
+  //     })
+  //       .then(res => loadBooks())
+  //       .catch(err => console.log(err));
+  //   }
+  // };
   console.log(books);
     return (
       <Container fluid>
@@ -65,14 +58,27 @@ function Books() {
             {books.length ? (
               <List>
                 {books.map(book => (
-                  <ListItem key={book._d}>
-                    <Link to={"/books/" + book.id}>
-                      <strong>
-                        {book.title} by {book.author}
-                      </strong>
-                    </Link>
-                    <DeleteBtn onClick={() => deleteBook(book._id)} />
-                  </ListItem>
+                
+                  <ListItem key={book._id}>
+                  <Col size="md-12">
+                    <Row>
+                      <img className="m-auto"
+                        src={book.imgsrc} alt={book.title}
+                      ></img>
+                      <Col size="md-10">
+                        <strong>
+                          {book.title} by {book.authors}
+                        </strong>
+                        <p>{book.description}</p>
+                        <a href={book.link}>See on Google gBooks →</a>
+                        <br></br>
+                        <br></br>
+                        <DeleteBtn onClick={() => deleteBook(book._id)} />
+                        <br></br>
+                      </Col>
+                    </Row>
+                  </Col>
+                </ListItem>
                 ))}
               </List>
             ) : (
