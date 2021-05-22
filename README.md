@@ -2,7 +2,7 @@
 
 
 ## Description
-This MERN stack site application allows users to search the Google Books API to then save the individual entiries they are interested in to a reading list. The application accomplishes this by saving search results that are rendered through a react state to a MongoDB database. The API routes allow for both saving and deleting to the MongoDB database.
+This MERN stack site application allows users to search the Google Books API to then save the individual entries they are interested in to a reading list. The application accomplishes this by saving search results that are rendered through a react state to a MongoDB database. The API routes allow for both saving and deleting to the MongoDB database.
 ## Table of Contents
 - [Installation](#installation)
 - [Usage](#usage)
