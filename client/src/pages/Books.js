@@ -3,7 +3,6 @@ import DeleteBtn from "../components/DeleteBtn";
 import SaveBtn from "../components/SaveBtn";
 import Jumbotron from "../components/Jumbotron";
 import API from "../utils/API";
-import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../components/Grid";
 import { List, ListItem } from "../components/List";
 import { Input, FormBtn } from "../components/Form";
@@ -26,10 +25,17 @@ function Books() {
   }
 
   // Deletes a book from the database with a given id, then reloads books from the db
-  function saveBook(id) {
-    API.saveBook(id)
-      .then((res) => loadBooks())
-      .catch((err) => console.log(err));
+  function saveBook(book) {
+    API.saveBook({
+      imgsrc: book.volumeInfo.imageLinks.smallThumbnail,
+      title: book.volumeInfo.title,
+      authors: book.volumeInfo.authors,
+      description: book.volumeInfo.description,
+      link: book.volumeInfo.previewLink,
+
+    })
+    .then(res => loadBooks())
+    .catch(err => console.log(err));
   }
   // Handles updating component state when the user types into the input field
   function handleInputChange(event) {
@@ -53,16 +59,6 @@ function Books() {
         }
       })
       .catch((err) => console.log(err));
-
-    // if (formObject.title && formObject.author) {
-    //   API.saveBook({
-    //     title: formObject.title,
-    //     author: formObject.author,
-    //     synopsis: formObject.synopsis
-    //   })
-    //     .then(res => loadBooks())
-    //     .catch(err => console.log(err));
-    // }
   }
 
   return (
@@ -72,44 +68,49 @@ function Books() {
           <Jumbotron>
             <h1>What Books Should I Read?</h1>
           </Jumbotron>
-          <form>
-            <Input
-              onChange={handleInputChange}
-              name="searched"
-              placeholder="Search Books"
-            />
-            <FormBtn onClick={handleFormSubmit}>Search</FormBtn>
-          </form>
+          <Col size="md-12">
+            <form>
+              <Row fluid justify>
+                <Input
+                  onChange={handleInputChange}
+                  name="searched"
+                  placeholder="Search Books"
+                  />
+                <FormBtn onClick={handleFormSubmit}>Search</FormBtn>
+              </Row>
+            </form>
+          </Col>
 
           {books.length ? (
             <List>
               {books.map((book) => (
                 <ListItem key={book.id}>
-                  <Row>
-                    <Col size="md-2">
-                      <img
+                  <Col size="md-12">
+                    <Row>
+                      <img className="m-auto"
                         src={book.volumeInfo.imageLinks.smallThumbnail}
                       ></img>
-                    </Col>
-                    <Col size="md-10">
-                      <strong>
-                        {book.volumeInfo.title} by {book.volumeInfo.authors}
-                      </strong>
-                      {/* <Link to={"/books/" + book.id}> */}
-                      {/* </Link> */}
-                      <p>{book.volumeInfo.description}</p>
-                      <SaveBtn onClick={() => saveBook(book.id)} />
-                      <DeleteBtn onClick={() => saveBook(book.id)} />
-                      <br></br>
-                      <br></br>
-                      <a href={book.volumeInfo.previewLink}>See on Google Books</a>
-                    </Col>
-                  </Row>
+                      <Col size="md-10">
+                        <strong>
+                          {book.volumeInfo.title} by {book.volumeInfo.authors}
+                        </strong>
+                        {/* <Link to={"/books/" + book.id}> */}
+                        {/* </Link> */}
+                        <p>{book.volumeInfo.description}</p>
+                        <a href={book.volumeInfo.previewLink}>See on Google Books →</a>
+                        <br></br>
+                        <br></br>
+                        <SaveBtn onClick={() => saveBook(book)} />
+                        <DeleteBtn onClick={() => saveBook(book)} />
+                        <br></br>
+                      </Col>
+                    </Row>
+                  </Col>
                 </ListItem>
               ))}
             </List>
           ) : (
-            <h3>No Results to Display</h3>
+            <h3 className="mt-5" style={{textAlign: "center"}} >– No Results to Display –</h3>
           )}
         </Col>
       </Row>

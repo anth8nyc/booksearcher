@@ -5,9 +5,10 @@ import "./style.css";
 // That way we don't have to define them all individually
 function SaveBtn(props) {
   return (
-    <span className="save-btn" {...props} role="button" tabIndex="0">
-      💾
-    </span>
+    <button {...props} className="col-1 save-btn btn" role="button" tabIndex="0">
+      {props.children}
+      Save
+    </button>
   );
 }
 

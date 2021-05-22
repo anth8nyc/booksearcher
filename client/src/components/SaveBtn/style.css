@@ -1,10 +1,8 @@
-.save-btn {
-  /* float: right; */
-  color: #44e747;
+button.save-btn {
   margin: 10px;
+  float: right;
 }
 
-span.save-btn:hover{
-  box-shadow: #44e747;
-  text-shadow: #44e747;
+button.save-btn:hover{
+  background-color: #44e747;
 }
