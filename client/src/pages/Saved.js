@@ -32,20 +32,6 @@ function Books() {
       .catch(err => console.log(err));
   }
 
-  // When the form is submitted, use the API.saveBook method to save the book data
-  // Then reload books from the database
-  // function handleFormSubmit(event) {
-  //   event.preventDefault();
-  //   if (formObject.title && formObject.author) {
-  //     API.saveBook({
-  //       title: formObject.title,
-  //       author: formObject.author,
-  //       synopsis: formObject.synopsis
-  //     })
-  //       .then(res => loadBooks())
-  //       .catch(err => console.log(err));
-  //   }
-  // };
   console.log(books);
     return (
       <Container fluid>
@@ -70,7 +56,7 @@ function Books() {
                           {book.title} by {book.authors}
                         </strong>
                         <p>{book.description}</p>
-                        <a href={book.link}>See on Google gBooks →</a>
+                        <a href={book.link}>See on Google Books →</a>
                         <br></br>
                         <br></br>
                         <DeleteBtn onClick={() => deleteBook(book._id)} />

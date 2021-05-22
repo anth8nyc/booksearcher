@@ -10,19 +10,22 @@ import { Input, FormBtn } from "../components/Form";
 function Books() {
   // Setting our component's initial state
   const [gbooks, setgBooks] = useState([]);
+  const [savedbooks, setBooks] = useState([]);
   const [formObject, setFormObject] = useState({});
 
-  // // Load all books and store them with setBooks
-  // useEffect(() => {
-  //   loadBooks();
-  // }, []);
+  function loadSavedBooks() {
+    API.getSavedBooks()
+      .then((res) => {
+        console.log(res.data);
+        setBooks(res.data);
+      })
+      .catch((err) => console.log(err));
+  }
 
-  // // Loads all books and sets them to books
-  // function loadBooks() {
-  //   API.getSavedBooks()
-  //     .then((res) => setBooks(res.data))
-  //     .catch((err) => console.log(err));
-  // }
+  // // Load all saved books
+  useEffect(() => {
+    loadSavedBooks();
+  }, []);
 
   // Deletes a book from the database with a given id, then reloads books from the db
   function saveBook(gbook) {
@@ -31,10 +34,17 @@ function Books() {
       title: gbook.volumeInfo.title,
       authors: gbook.volumeInfo.authors,
       description: gbook.volumeInfo.description,
-      link: gbook.volumeInfo.previewLink
+      link: gbook.volumeInfo.previewLink,
     })
-      .then((res) => console.log(res))
+      .then((res) => {
+        console.log(res)
+        document.querySelector(`.al`).classList.remove("d-none");
+      })
       .catch((err) => console.log(err));
+    
+    setTimeout(function () {
+      document.querySelector(`.al`).classList.add("d-none");
+    }, 1800);
   }
   // Handles updating component state when the user types into the input field
   function handleInputChange(event) {
@@ -58,10 +68,9 @@ function Books() {
         }
       })
       .catch((err) => console.log(err));
-
-
   }
-  console.log(gbooks)
+  console.log(savedbooks);
+  console.log(gbooks);
   return (
     <Container fluid>
       <Row>
@@ -75,11 +84,21 @@ function Books() {
                 <Input
                   onChange={handleInputChange}
                   name="searched"
-                  placeholder="Search Books"
-                  />
+                  placeholder="Search"
+                />
                 <FormBtn onClick={handleFormSubmit}>Search</FormBtn>
               </Row>
             </form>
+
+            <div className="d-none container row no-gutters al justify-content-center mb-3">
+              <div
+                className="row alert alert-success m-auto col-3 rounded-pill"
+                role="alert"
+              >
+                <p className="m-auto p-1">Book saved!</p>
+              </div>
+            </div>
+
           </Col>
 
           {gbooks.length ? (
@@ -88,7 +107,8 @@ function Books() {
                 <ListItem key={gbook.id}>
                   <Col size="md-12">
                     <Row>
-                      <img className="m-auto"
+                      <img
+                        className="m-auto"
                         src={gbook.volumeInfo.imageLinks.smallThumbnail}
                         alt={gbook.volumeInfo.title}
                       ></img>
@@ -97,11 +117,12 @@ function Books() {
                           {gbook.volumeInfo.title} by {gbook.volumeInfo.authors}
                         </strong>
                         <p>{gbook.volumeInfo.description}</p>
-                        <a href={gbook.volumeInfo.previewLink}>See on Google gBooks →</a>
+                        <a href={gbook.volumeInfo.previewLink}>
+                          See on Google Books →
+                        </a>
                         <br></br>
                         <br></br>
                         <SaveBtn onClick={() => saveBook(gbook)} />
-                        <DeleteBtn onClick={() => saveBook(gbook)} />
                         <br></br>
                       </Col>
                     </Row>
@@ -110,7 +131,9 @@ function Books() {
               ))}
             </List>
           ) : (
-            <h3 className="mt-5" style={{textAlign: "center"}} >– No Results to Display –</h3>
+            <h3 className="mt-5" style={{ textAlign: "center" }}>
+              – Search for Books –
+            </h3>
           )}
         </Col>
       </Row>
