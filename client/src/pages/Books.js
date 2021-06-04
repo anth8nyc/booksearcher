@@ -109,7 +109,7 @@ function Books() {
                   <Col flex size="md-12">
                     <Row justify>
                       <a href={gbook.volumeInfo.previewLink}><img
-                        className="m-auto col-md-2 col-12"
+                        className="m-auto col-12"
                         src={gbook.volumeInfo.imageLinks.smallThumbnail}
                         alt={gbook.volumeInfo.title}
                       ></img></a>
