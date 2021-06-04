@@ -1,23 +1,21 @@
 import React from "react";
-import { Col, Row, Container } from "../components/Grid";
+import { Col, Row } from "../components/Grid";
 import Jumbotron from "../components/Jumbotron";
 
 function NoMatch() {
   return (
-    <Container fluid>
       <Row>
         <Col size="md-12">
           <Jumbotron>
-            <h1>404 Page Not Found</h1>
-            <h1>
-              <span role="img" aria-label="Face With Rolling Eyes Emoji">
-                🙄
+            <h3>That's an interesting search. I could't find a book with that name–– try again?</h3>
+            <h3>
+              <span role="img" aria-label="Face With Wide Open Eyes Emoji">
+                😳
               </span>
-            </h1>
+            </h3>
           </Jumbotron>
         </Col>
       </Row>
-    </Container>
   );
 }
 

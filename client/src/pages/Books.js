@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
-import DeleteBtn from "../components/DeleteBtn";
 import SaveBtn from "../components/SaveBtn";
 import Jumbotron from "../components/Jumbotron";
 import API from "../utils/API";
 import { Col, Row, Container } from "../components/Grid";
 import { List, ListItem } from "../components/List";
 import { Input, FormBtn } from "../components/Form";
+import NoMatch from "./NoMatch";
 
 function Books() {
-  // Setting our component's initial state
+  // Setting component's initial state
   const [gbooks, setgBooks] = useState([]);
   const [savedbooks, setBooks] = useState([]);
   const [formObject, setFormObject] = useState({});
@@ -22,12 +22,12 @@ function Books() {
       .catch((err) => console.log(err));
   }
 
-  // // Load all saved books
+  // Load all saved books
   useEffect(() => {
     loadSavedBooks();
   }, []);
 
-  // Deletes a book from the database with a given id, then reloads books from the db
+  // Saves a book from the Google Books API to the db, then reloads books from the db
   function saveBook(gbook) {
     API.saveBook({
       imgsrc: gbook.volumeInfo.imageLinks.smallThumbnail,
@@ -37,11 +37,11 @@ function Books() {
       link: gbook.volumeInfo.previewLink,
     })
       .then((res) => {
-        console.log(res)
+        console.log(res);
         document.querySelector(`.al`).classList.remove("d-none");
       })
       .catch((err) => console.log(err));
-    
+
     setTimeout(function () {
       document.querySelector(`.al`).classList.add("d-none");
     }, 1800);
@@ -56,13 +56,13 @@ function Books() {
   // Then reload books from the database
   function handleFormSubmit(event) {
     event.preventDefault();
-    console.log(formObject.searched);
+    // console.log(formObject.searched);
     API.getGoogleBooks(formObject.searched)
       .then((res) => {
         console.log(res.data.items);
         setgBooks(res.data.items);
         if (res.data.items === undefined) {
-          gbooks = [];
+          setgBooks([]);
         } else {
           setgBooks(res.data.items);
         }
@@ -98,21 +98,22 @@ function Books() {
                 <p className="m-auto p-1">Book saved!</p>
               </div>
             </div>
-
           </Col>
 
-          {gbooks.length ? (
+          {!gbooks ? (
+            <NoMatch />
+          ) : gbooks.length ? (
             <List>
               {gbooks.map((gbook) => (
                 <ListItem key={gbook.id}>
                   <Col size="md-12">
-                    <Row>
+                    {/* <Row> */}
                       <img
-                        className="m-auto"
+                        className="m-auto col-md-2"
                         src={gbook.volumeInfo.imageLinks.smallThumbnail}
                         alt={gbook.volumeInfo.title}
                       ></img>
-                      <Col size="md-10">
+                      <Col size="md-10 12">
                         <strong>
                           {gbook.volumeInfo.title} by {gbook.volumeInfo.authors}
                         </strong>
@@ -125,7 +126,7 @@ function Books() {
                         <SaveBtn onClick={() => saveBook(gbook)} />
                         <br></br>
                       </Col>
-                    </Row>
+                    {/* </Row> */}
                   </Col>
                 </ListItem>
               ))}

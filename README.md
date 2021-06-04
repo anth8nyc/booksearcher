@@ -15,6 +15,8 @@ To install necessary dependencies for forked and locally hosted repositories, ru
 
 ## Usage
 Books can be searched on the search page, and are simply saved by selecting "Save" on result entries. To view and delete unwanted saved books, the 'My Books' page allows for either.
+
+View the site at its deployed url: [googlebookstoread.herokuapp.com](http://googlebookstoread.herokuapp.com/?)
 ### Demo
 ![Site Demo showing search bar from site](./models/gbookdemo.png)
 
