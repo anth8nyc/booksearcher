@@ -46,12 +46,12 @@ function Books() {
                 {books.map(book => (
                 
                   <ListItem key={book._id}>
-                  <Col size="md-12">
-                    <Row>
-                      <img className="m-auto"
+                  <Col flex size="md-12">
+                    <Row justify>
+                      <a href={book.link}><img className="m-auto col-md-2 col-12"
                         src={book.imgsrc} alt={book.title}
-                      ></img>
-                      <Col size="md-10">
+                      ></img></a>
+                      <Col size="md-10 12">
                         <strong>
                           {book.title} by {book.authors}
                         </strong>

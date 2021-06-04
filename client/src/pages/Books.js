@@ -92,7 +92,7 @@ function Books() {
 
             <div className="d-none container row no-gutters al justify-content-center mb-3">
               <div
-                className="row alert alert-success m-auto col-3 rounded-pill"
+                className="row alert alert-success m-auto col-md-3 col-9 rounded-pill"
                 role="alert"
               >
                 <p className="m-auto p-1">Book saved!</p>
@@ -106,13 +106,13 @@ function Books() {
             <List>
               {gbooks.map((gbook) => (
                 <ListItem key={gbook.id}>
-                  <Col size="md-12">
-                    {/* <Row> */}
-                      <img
-                        className="m-auto col-md-2"
+                  <Col flex size="md-12">
+                    <Row justify>
+                      <a href={gbook.volumeInfo.previewLink}><img
+                        className="m-auto col-md-2 col-12"
                         src={gbook.volumeInfo.imageLinks.smallThumbnail}
                         alt={gbook.volumeInfo.title}
-                      ></img>
+                      ></img></a>
                       <Col size="md-10 12">
                         <strong>
                           {gbook.volumeInfo.title} by {gbook.volumeInfo.authors}
@@ -126,7 +126,8 @@ function Books() {
                         <SaveBtn onClick={() => saveBook(gbook)} />
                         <br></br>
                       </Col>
-                    {/* </Row> */}
+                    </Row>
+
                   </Col>
                 </ListItem>
               ))}
