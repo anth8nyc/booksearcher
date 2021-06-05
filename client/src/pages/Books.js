@@ -108,11 +108,12 @@ function Books() {
                 <ListItem key={gbook.id}>
                   <Col flex size="md-12">
                     <Row justify>
-                      <a href={gbook.volumeInfo.previewLink}><img
-                        className="m-auto col-12"
+                      <a href={gbook.volumeInfo.previewLink}>
+                        <img className="m-auto col-12"
                         src={gbook.volumeInfo.imageLinks.smallThumbnail}
-                        alt={gbook.volumeInfo.title}
-                      ></img></a>
+                        alt={gbook.volumeInfo.title}>
+                        </img>
+                      </a>
                       <Col size="md-10 12">
                         <strong>
                           {gbook.volumeInfo.title} by {gbook.volumeInfo.authors}

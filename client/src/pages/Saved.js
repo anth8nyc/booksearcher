@@ -48,9 +48,12 @@ function Books() {
                   <ListItem key={book._id}>
                   <Col flex size="md-12">
                     <Row justify>
-                      <a href={book.link}><img className="m-auto col-md-2 col-12"
-                        src={book.imgsrc} alt={book.title}
-                      ></img></a>
+                      <a href={book.link}>
+                        <img className="m-auto col-12"
+                        src={book.imgsrc} 
+                        alt={book.title}>
+                        </img>
+                      </a>
                       <Col size="md-10 12">
                         <strong>
                           {book.title} by {book.authors}
